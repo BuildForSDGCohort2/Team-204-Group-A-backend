@@ -18,6 +18,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 * Run `python3 -m venv env` on command prompt
 * Run `source env/bin/activate` on command prompt
 * Run `pip install -r requirements.txt` on command prompt
-* Run `set FLASK_APP=run.py` on command prompt
+* Run `export FLASK_CONFIG=development` on command prompt
+* Run `export FLASK_APP=run.py` on command prompt
 * Run `flask run` on command prompt
 * View the app on `http://127.0.0.1:5000/`
