@@ -31,7 +31,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 * Run `flask run` on command prompt
 * View the app on `http://127.0.0.1:5000/`
 
-## PSL Set up
+## PSQL Set up
 * `Install postgreSQL`
 * `Create database prescribeme`
 * Run `python manage.py db init`
