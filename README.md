@@ -1,4 +1,6 @@
 # Team-204-Group-A-backend
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/37b0280f42fd4fa5a98d051ad69602ce)](https://www.codacy.com/gh/BuildForSDGCohort2/Team-204-Group-A-backend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BuildForSDGCohort2/Team-204-Group-A-backend&amp;utm_campaign=Badge_Grade)
+
 ## PrescibeMe
 ```
 PrescribeMe helps patient (client) get prescription or Book a meeting in hospital. Patient gets to contact provider for quick diagnosis and prescription and can order medication only or book a appointment with the doctor.
@@ -27,7 +29,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 * Run `pip install -r requirements.txt` on command prompt
 * Run `export FLASK_CONFIG=development` on command prompt
 * Run `export FLASK_APP=run.py` on command prompt
-* Run `export export DATABASE_URL= "postgresql://<username>:<password>@localhost/prescribeme"` on command prompt
+* Run `export DATABASE_URL= "postgresql://<username>:<password>@localhost/prescribeme"` on command prompt
 * Run `flask run` on command prompt
 * View the app on `http://127.0.0.1:5000/`
 
