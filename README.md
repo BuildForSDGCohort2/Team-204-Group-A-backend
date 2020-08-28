@@ -1,4 +1,7 @@
 # Team-204-Group-A-backend
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9179bdde292d4fc1b7e8fb9847318687)](https://app.codacy.com/gh/BuildForSDGCohort2/Team-204-Group-A-backend?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDGCohort2/Team-204-Group-A-backend&utm_campaign=Badge_Grade_Dashboard)
+
 ## PrescibeMe
 ```
 PrescribeMe helps patient (client) get prescription or Book a meeting in hospital. Patient gets to contact provider for quick diagnosis and prescription and can order medication only or book a appointment with the doctor.
