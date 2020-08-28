@@ -1,5 +1,5 @@
 """
-This class holds user model to store user details
+This class holds user model to store user details.
 """
 
 from marshmallow import fields, Schema
@@ -21,7 +21,7 @@ class UserModel(db.Model):
     modified_at = db.Column(db.DateTime)
 
     def __init__(self, data):
-        """Constructor"""
+        """Constructor."""
         self.username = data.get('username')
         self.firstname = data.get('firstname')
         self.lastname = data.get('lastname')
@@ -72,7 +72,8 @@ class UserModel(db.Model):
         return '<id {}>'.format(self.id)
 
 class UserSchema(Schema):
-    """User Schema"""
+
+    """User Schema."""
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)
     firstname = fields.Str(required=True)

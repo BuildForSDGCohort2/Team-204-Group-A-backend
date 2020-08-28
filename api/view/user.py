@@ -7,8 +7,7 @@ user_schema = UserSchema()
 
 @user_api.route('/signup', methods=['POST'])
 def create_user():
-    """Creates user"""
-
+    """Creates user."""
     req_data = request.get_json()
     data = user_schema.load(req_data)
 
