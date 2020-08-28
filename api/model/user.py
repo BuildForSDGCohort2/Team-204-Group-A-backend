@@ -73,7 +73,6 @@ class UserModel(db.Model):
 
 class UserSchema(Schema):
 
-    """User Schema."""
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)
     firstname = fields.Str(required=True)
