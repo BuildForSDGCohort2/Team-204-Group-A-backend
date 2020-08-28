@@ -7,9 +7,7 @@ user_schema = UserSchema()
 
 @user_api.route('/signup', methods=['POST'])
 def create_user():
-    """
-    Creates user
-    """
+    """Creates user"""
 
     req_data = request.get_json()
     data = user_schema.load(req_data)
@@ -28,6 +26,27 @@ def create_user():
     user = UserModel(data)
     user.save()
     return custom_response({'meassage': 'User successfully created!'}, 201)
+
+@user_api.route('/signin', methods=['POST'])
+def signin_user():
+    req_data = request.get_json()
+    data = user_schema.load(req_data, partial=True)
+
+    if not data.get('username'):
+        return custom_response({'error': 'You need username or password to sign in'}, 400)
+
+    if not data.get('password'):
+        return custom_response({'error': 'You need username or password to sign in'}, 400)
+
+    user = UserModel.get_user_by_username(data.get('username'))
+
+    if not user:
+        return custom_response({'error': 'Invalid username or password!'}, 400)
+
+    if not user.check_password_hash(data.get('password')):
+        return custom_response({'error': 'Invalid username or password!'}, 400)
+
+    return custom_response({'message': 'You have successfully sign in!'}, 200)
 
 def custom_response(res, status_code):
 
