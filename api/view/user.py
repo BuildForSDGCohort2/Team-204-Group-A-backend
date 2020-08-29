@@ -1,4 +1,4 @@
-from flask import request, json, Response, Blueprint, g
+from flask import request, json, Response, Blueprint
 from ..model.user import UserModel, UserSchema
 from ..auth.authentication import Auth
 

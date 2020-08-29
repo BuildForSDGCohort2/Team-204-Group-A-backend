@@ -10,6 +10,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 |Endpoint                                 | Functionality                    |HTTP method 
 |-----------------------------------------|----------------------------------|-------------
 |/api/v1/user/signup                      |Signup account                    |POST 
+|------------------------------------------------------------------------------------------
 |/api/v1/user/auth/signin                 |Signin in user                    |POST
 
 
