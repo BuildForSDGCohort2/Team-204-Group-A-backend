@@ -1,10 +1,8 @@
 import jwt
 import os
 import datetime
-from flask import json
 from ..model.user import UserModel
-from flask import json, Response, request, g
-from functools import wraps
+from flask import json, Response
 
 class Auth():
 
