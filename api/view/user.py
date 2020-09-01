@@ -1,6 +1,7 @@
 from flask import request, json, Response, Blueprint
+from flask_jwt_extended import (create_access_token, jwt_required, get_raw_jwt)
 from ..model.user import UserModel, UserSchema
-from ..auth.authentication import Auth
+from ..model.blacklist_token import BlacklistToken
 
 user_api = Blueprint('users', __name__)
 user_schema = UserSchema()
@@ -28,7 +29,7 @@ def create_user():
     user = UserModel(data)
     user.save()
     user_ser_data = user_schema.dump(user).data
-    token = Auth.generate_token(user_ser_data.get('id'))
+    token = create_access_token(user_ser_data.get('id'))
     return custom_response({'meassage': 'User successfully created!', 'token': token}, 201)
 
 @user_api.route('/auth/signin', methods=['POST'])
@@ -54,9 +55,35 @@ def signin_user():
         return custom_response({'error': 'Invalid username or password!'}, 400)
 
     user_ser_data = user_schema.dump(user).data
-    token = Auth.generate_token(user_ser_data.get('id'))
+    token = create_access_token(user_ser_data.get('id'))
 
     return custom_response({'message': 'You have successfully sign in!', 'token': token}, 200)
+
+@user_api.route('/auth/signout', methods=['POST'])
+@jwt_required
+def signout_user():
+    jti = get_raw_jwt()['jti']
+    try:
+        blacklist_token = BlacklistToken(jti=jti)
+        blacklist_token.add()
+        return custom_response({'message': 'You have signedout successfully!'}, 200)
+    except:
+        return custom_response({'error': 'Something went wrong'}, 500)
+    
+
+@user_api.route('/auth/<int:user_id>', methods=['GET'])
+@jwt_required
+def get_a_user(user_id):
+
+    """
+    Get a single user
+    """
+    user = UserModel.get_one_user(user_id)
+    if not user:
+        return custom_response({'error': 'user not found'}, 404)
+    
+    ser_user = user_schema.dump(user).data
+    return custom_response(ser_user, 200)
 
 def custom_response(res, status_code):
 
