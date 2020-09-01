@@ -7,10 +7,10 @@ from flask_jwt_extended import JWTManager
 
 # local import
 from instance.config import api_config
-from .model import db, bcrypt
+from api.model import db, bcrypt
 
 # blue print
-from .view.user import user_api as user_blue_print
+from api.view.user import user_api as user_blue_print
 
 
 def create_api(config_name):
