@@ -21,8 +21,8 @@ def create_api(config_name):
     bcrypt.init_app(api)
     db.init_app(api)
     from .model.blacklist_token import BlacklistToken
-    from .model.user import UserModel
-
+    from .model.user import UserModel, UserSchema
+    
     jwt = JWTManager(api)
 
     @jwt.token_in_blacklist_loader
@@ -30,10 +30,24 @@ def create_api(config_name):
         jti = decrypted_token['jti']
         return BlacklistToken.check_blacklist(jti)
 
-    
-
     # registr blue print
     api.register_blueprint(user_blue_print, url_prefix='/api/v1/user')
+    
+    @api.before_first_request
+    def create_admin_user():
+        db.drop_all()
+        db.create_all()
+        # # save admin
+        data = {'firstname' : "User",
+                'lastname' : "Admin",
+                'username' : "admin",
+                'email' : "admin@admin.com",
+                'password' : "Admin123",
+                'is_admin' : True}
+        admin_user = UserModel(data)
+        
+        # admin = UserModel(data)
+        admin_user.save()
 
     # temporary route
     @api.route('/')
