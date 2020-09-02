@@ -11,7 +11,7 @@ class UserModel(db.Model):
     # table name 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(128), nullable=False)
     firstname = db.Column(db.String(128), nullable=False)
     lastname = db.Column(db.String(128), nullable=False)
@@ -19,6 +19,7 @@ class UserModel(db.Model):
     password = db.Column(db.String(128), nullable=True)
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, data):
         """Constructor."""
@@ -29,6 +30,7 @@ class UserModel(db.Model):
         self.password = self.__generate_hash(data.get('password'))
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
+        self.is_admin = data.get('is_admin')
 
     def save(self):
         db.session.add(self)
@@ -81,3 +83,4 @@ class UserSchema(Schema):
     password = fields.Str(required=True, load_only=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
+    
