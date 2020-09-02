@@ -75,9 +75,8 @@ def signout_user():
 @jwt_required
 def get_a_user(user_id):
 
-    """
-    Get a single user
-    """
+    # Get a single user
+
     user = UserModel.get_one_user(user_id)
     if not user:
         return custom_response({'error': 'user not found'}, 404)
