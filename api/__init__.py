@@ -2,10 +2,11 @@
     This module initialize the api.
 """
 from flask import Flask
+from flask_jwt_extended import JWTManager
 
 
 # local import
-from config import api_config
+from instance.config import api_config
 from api.model import db, bcrypt
 
 # blue print
@@ -17,11 +18,19 @@ def create_api(config_name):
     api.config.from_object(api_config[config_name])
     api.config.from_pyfile('config.py')
 
-    from api.model.user import UserModel
-
-
     bcrypt.init_app(api)
     db.init_app(api)
+    from .model.blacklist_token import BlacklistToken
+    from .model.user import UserModel
+
+    jwt = JWTManager(api)
+
+    @jwt.token_in_blacklist_loader
+    def check_if_token_in_blacklist(decrypted_token):
+        jti = decrypted_token['jti']
+        return BlacklistToken.check_blacklist(jti)
+
+    
 
     # registr blue print
     api.register_blueprint(user_blue_print, url_prefix='/api/v1/user')
