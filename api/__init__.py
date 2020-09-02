@@ -1,7 +1,7 @@
 """
     This module initialize the api.
 """
-from flask import Flask, json
+from flask import Flask
 from flask_jwt_extended import JWTManager
 
 
