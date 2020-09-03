@@ -35,8 +35,8 @@ def create_api(config_name):
     
     # @api.before_first_request
     # def create_admin_user():
-    #     db.drop_all()
-    #     db.create_all()
+    #     # db.drop_all()
+    #     # db.create_all()
     #     # # save admin
     #     data = {'firstname' : "User",
     #             'lastname' : "Admin",
