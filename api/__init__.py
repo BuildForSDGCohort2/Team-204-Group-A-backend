@@ -33,21 +33,21 @@ def create_api(config_name):
     # registr blue print
     api.register_blueprint(user_blue_print, url_prefix='/api/v1/user')
     
-    # @api.before_first_request
-    # def create_admin_user():
-    #     # db.drop_all()
-    #     # db.create_all()
-    #     # # save admin
-    #     data = {'firstname' : "User",
-    #             'lastname' : "Admin",
-    #             'username' : "admin",
-    #             'email' : "admin@admin.com",
-    #             'password' : "Admin123",
-    #             'is_admin' : True}
-    #     admin_user = UserModel(data)
+    @api.before_first_request
+    def create_admin_user():
+        db.drop_all()
+        db.create_all()
+        # save admin
+        data = {'firstname' : "User",
+                'lastname' : "Admin",
+                'username' : "admin",
+                'email' : "admin@admin.com",
+                'password' : "Admin123",
+                'is_admin' : True}
+        admin_user = UserModel(data)
         
-    #     # admin = UserModel(data)
-    #     admin_user.save()
+        # admin = UserModel(data)
+        admin_user.save()
 
     # temporary route
     @api.route('/')
