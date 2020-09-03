@@ -7,9 +7,9 @@ from api import create_api, db
 config_name = os.getenv('FLASK_CONFIG')
 api = create_api(config_name)
 
-migrate = Migrate(app=api, db=db)
+migrate = Migrate(api, db)
 
-manager = Manager(app=api)
+manager = Manager(api)
 
 manager.add_command('db', MigrateCommand)
 
