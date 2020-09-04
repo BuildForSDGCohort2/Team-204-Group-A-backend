@@ -3,7 +3,6 @@ This class holds user model to store user details.
 """
 
 from marshmallow import fields, Schema
-from flask_jwt_extended import get_jwt_identity
 import datetime
 from . import db, bcrypt
 

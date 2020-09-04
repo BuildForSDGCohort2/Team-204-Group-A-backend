@@ -46,6 +46,6 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 
 * Test endpoints on [POSTMAN](https://www.postman.com/)
 
-# Access API END POINTs
+## Access API END POINTs
 
-* Link to HEROKU: [https://prescribeme-stage.herokuapp.com/] (https://prescribeme-stage.herokuapp.com/)
+* Link to HEROKU: https://prescribeme-stage.herokuapp.com/
