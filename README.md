@@ -45,3 +45,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 * Run `python manage.py db upgrade`
 
 * Test endpoints on [POSTMAN](https://www.postman.com/)
+
+# Access API END POINTs
+
+* Link to HEROKU: [https://prescribeme-stage.herokuapp.com/] (https://prescribeme-stage.herokuapp.com/)
