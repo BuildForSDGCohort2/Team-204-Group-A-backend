@@ -33,7 +33,6 @@ class UserModel(db.Model):
         self.password = self.__generate_hash(data.get('password'))
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
-        
 
     def save(self):
         db.session.add(self)
