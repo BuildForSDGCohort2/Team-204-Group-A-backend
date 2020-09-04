@@ -48,4 +48,4 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 
 ## Access API END POINTs
 
-* Link to HEROKU: < https://prescribeme-stage.herokuapp.com/ >
+* Link to HEROKU: `https://prescribeme-stage.herokuapp.com/`

@@ -86,5 +86,4 @@ class UserSchema(Schema):
     is_provider = fields.Bool(required=False)
     password = fields.Str(required=True, load_only=True)
     created_at = fields.DateTime(dump_only=True)
-    modified_at = fields.DateTime(dump_only=True)
-    
+    modified_at = fields.DateTime(dump_only=True)    
