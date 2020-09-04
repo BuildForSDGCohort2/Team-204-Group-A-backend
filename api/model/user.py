@@ -20,6 +20,7 @@ class UserModel(db.Model):
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_provider = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, data):
         """Constructor."""
@@ -27,10 +28,11 @@ class UserModel(db.Model):
         self.firstname = data.get('firstname')
         self.lastname = data.get('lastname')
         self.email = data.get('email')
+        self.is_admin = data.get('is_admin')
+        self.is_provider = data.get('is_provider')
         self.password = self.__generate_hash(data.get('password'))
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
-        self.is_admin = data.get('is_admin')
 
     def save(self):
         db.session.add(self)
@@ -70,6 +72,7 @@ class UserModel(db.Model):
     def get_user_by_username(value):
         return UserModel.query.filter_by(username=value).first()
 
+
     def __repr__(self):
         return '<id {}>'.format(self.id)
 
@@ -80,6 +83,7 @@ class UserSchema(Schema):
     firstname = fields.Str(required=True)
     lastname = fields.Str(required=True)
     email = fields.Email(required=True)
+    is_provider = fields.Bool(required=False)
     password = fields.Str(required=True, load_only=True)
     created_at = fields.DateTime(dump_only=True)
-    modified_at = fields.DateTime(dump_only=True)
+    modified_at = fields.DateTime(dump_only=True)    

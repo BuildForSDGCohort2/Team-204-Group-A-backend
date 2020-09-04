@@ -25,6 +25,8 @@ def create_user():
         message = {'error':'User with this username already exist if it is you. Go on and log in, if not provide another username and try again'}
         return custom_response(message, 400)
     
+    if 'is_provider' in data:
+        data['is_provider'] = True
 
     user = UserModel(data)
     user.save()
