@@ -7,18 +7,27 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 ```
 
 # PrescribeMe API Endpoints
-|Endpoint                                 | Functionality                    |HTTP method 
-|-----------------------------------------|----------------------------------|-------------
-|/api/v1/user/signup                      |Signup account                    |POST 
-|                                         |                                  |
-|/api/v1/user/auth/signin                 |Signin in user                    |POST
-|                                         |                                  |
-|/api/v1/user/auth/signout                |Signin out user                   |POST
+|Endpoint                                             | Functionality                    |HTTP method 
+|-----------------------------------------------------|----------------------------------|-------------
+|/api/v1/user/signup                                  |Signup account                    |POST 
+|                                                     |                                  |
+|/api/v1/user/auth/signin                             |Signin in user                    |POST
+|                                                     |                                  |
+|/api/v1/user/auth/signout                            |Signin out user                   |POST
+|                                                     |                                  |
+|/api/v1/facilities                                   | Fetch all facilities             |GET
+|                                                     |                                  |
+|/api/v1/facilities/<'int:facility_id'>               |Fetch one facility                |GET
+|                                                     |                                  |
+|/api/v1/facilities/create                            |Create a facility                 |POST
+|                                                     |                                  |
+|/api/v1/provider//assign/facility/<'int:facility_id> |Assign provider a facility        |POST
+
 
 
 ## Technologies
 
-* Python 3.5
+* Python 3.6
 
 ## Requirements
 
@@ -30,7 +39,7 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 
 * Run `git clone` this repository and `cd Team-204-Group-A-backend` .
 * Run `python3 -m venv env` on command prompt
-* Run `source env/bin/activate` on command prompt
+* Run `source venv/bin/activate` on command prompt
 * Run `pip install -r requirements.txt` on command prompt
 * Run `export FLASK_CONFIG=development` on command prompt
 * Run `export FLASK_APP=run.py` on command prompt
