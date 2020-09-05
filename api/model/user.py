@@ -3,6 +3,7 @@ This class holds user model to store user details.
 """
 
 from marshmallow import fields, Schema
+from flask_jwt_extended import get_jwt_identity
 import datetime
 from . import db, bcrypt
 
@@ -21,6 +22,7 @@ class UserModel(db.Model):
     modified_at = db.Column(db.DateTime)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_provider = db.Column(db.Boolean, nullable=False, default=False)
+    facility_id = db.Column(db.Integer, db.ForeignKey('facility.id'))
 
     def __init__(self, data):
         """Constructor."""
@@ -33,6 +35,7 @@ class UserModel(db.Model):
         self.password = self.__generate_hash(data.get('password'))
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
+
 
     def save(self):
         db.session.add(self)
@@ -71,7 +74,6 @@ class UserModel(db.Model):
     @staticmethod
     def get_user_by_username(value):
         return UserModel.query.filter_by(username=value).first()
-
 
     def __repr__(self):
         return '<id {}>'.format(self.id)

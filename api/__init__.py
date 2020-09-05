@@ -11,6 +11,8 @@ from api.model import db, bcrypt
 
 # blue print
 from api.view.user import user_api as user_blue_print
+from api.view.facility_view import facility_api as facility_blue_print
+from api.view.provider_view import provider_api as provider_blue_print
 
 
 def create_api(config_name):
@@ -22,6 +24,7 @@ def create_api(config_name):
     db.init_app(api)
     from .model.blacklist_token import BlacklistToken
     from .model.user import UserModel, UserSchema
+    from .model.facility import FacilityModel
     
     jwt = JWTManager(api)
 
@@ -32,6 +35,8 @@ def create_api(config_name):
 
     # registr blue print
     api.register_blueprint(user_blue_print, url_prefix='/api/v1/user')
+    api.register_blueprint(facility_blue_print, url_prefix='/api/v1/facilities')
+    api.register_blueprint(provider_blue_print, url_prefix='/api/v1/provider')
     
     @api.before_first_request
     def create_admin_user():

@@ -1,10 +1,15 @@
-from flask import request, json, Response, Blueprint
-from flask_jwt_extended import (create_access_token, jwt_required, get_raw_jwt)
+from flask import request, json, Response, Blueprint, abort
+from flask_jwt_extended import (create_access_token, jwt_required, get_raw_jwt, get_jwt_identity)
 from ..model.user import UserModel, UserSchema
 from ..model.blacklist_token import BlacklistToken
 
 user_api = Blueprint('users', __name__)
 user_schema = UserSchema()
+
+def check_admin():
+    admin = get_admin()
+    if not admin:
+        abort(403)
 
 @user_api.route('/signup', methods=['POST'])
 def create_user():
@@ -93,3 +98,19 @@ def custom_response(res, status_code):
         response=json.dumps(res),
         status=status_code
     )
+
+def get_admin():
+    current_user = get_jwt_identity()
+    user = UserModel.get_one_user(current_user)
+    is_admin = user.is_admin
+    return is_admin
+
+def get_provider():
+    current_user = get_jwt_identity()
+    user = UserModel.get_one_user(current_user)
+    return user.is_provider
+
+def check_provider():
+    provider = get_provider()
+    if not provider:
+        abort(403)
