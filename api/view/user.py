@@ -47,24 +47,24 @@ def signin_user():
     if error:
         return custom_response(error, 400)
 
-    if not data.get('username'):
-        return custom_response({'error': 'You need username or password to sign in'}, 400)
+    if not data.get('email'):
+        return custom_response({'error': 'You need email or password to sign in'}, 400)
 
     if not data.get('password'):
-        return custom_response({'error': 'You need username or password to sign in'}, 400)
+        return custom_response({'error': 'You need email or password to sign in'}, 400)
 
-    user = UserModel.get_user_by_username(data.get('username'))
+    user = UserModel.get_user_by_email(data.get('email'))
 
     if not user:
-        return custom_response({'error': 'Invalid username or password!'}, 400)
+        return custom_response({'error': 'Invalid email or password!'}, 400)
 
     if not user.check_password_hash(data.get('password')):
-        return custom_response({'error': 'Invalid username or password!'}, 400)
+        return custom_response({'error': 'Invalid email or password!'}, 400)
 
     user_ser_data = user_schema.dump(user).data
     token = create_access_token(user_ser_data.get('id'))
 
-    return custom_response({'message': 'You have successfully sign in!', 'token': token}, 200)
+    return custom_response({'userdata':user_ser_data, 'token': token}, 200)
 
 @user_api.route('/auth/signout', methods=['POST'])
 @jwt_required

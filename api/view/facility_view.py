@@ -67,13 +67,11 @@ def update_facility(facility_id):
     facility = FacilityModel.get_one_facility(facility_id)
     if not facility:
         return custom_response({'error':'facility not found'}, 404)
-    
     data = facility_schema.dump(facility).data
     data, error = facility_schema.load(req_data, partial=True)
     if error:
         return custom_response(error, 400)
     facility.update(data)
-
     data = facility_schema.dump(facility).data
     return custom_response(data, 200)
     

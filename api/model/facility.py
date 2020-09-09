@@ -47,7 +47,7 @@ class FacilityModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def update(self):
+    def update(self, data):
         for key, item in data.items():
             setattr(self, key, item)
         self.modified_at = datetime.datetime.utcnow()
