@@ -59,3 +59,21 @@ def delete(facility_id):
     facility.delete()
     return custom_response({'message':'Facility deleted!'}, 204)
 
+@facility_api.route('/update/<int:facility_id>', methods=['PUT'])
+@jwt_required
+def update_facility(facility_id):
+    check_admin()
+    req_data = request.get_json()
+    facility = FacilityModel.get_one_facility(facility_id)
+    if not facility:
+        return custom_response({'error':'facility not found'}, 404)
+    
+    data = facility_schema.dump(facility).data
+    data, error = facility_schema.load(req_data, partial=True)
+    if error:
+        return custom_response(error, 400)
+    facility.update(data)
+
+    data = facility_schema.dump(facility).data
+    return custom_response(data, 200)
+    

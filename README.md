@@ -7,21 +7,23 @@ PrescribeMe helps patient (client) get prescription or Book a meeting in hospita
 ```
 
 # PrescribeMe API Endpoints
-|Endpoint                                             | Functionality                    |HTTP method 
-|-----------------------------------------------------|----------------------------------|-------------
-|/api/v1/user/signup                                  |Signup account                    |POST 
-|                                                     |                                  |
-|/api/v1/user/auth/signin                             |Signin in user                    |POST
-|                                                     |                                  |
-|/api/v1/user/auth/signout                            |Signin out user                   |POST
-|                                                     |                                  |
-|/api/v1/facilities                                   | Fetch all facilities             |GET
-|                                                     |                                  |
-|/api/v1/facilities/<'int:facility_id'>               |Fetch one facility                |GET
-|                                                     |                                  |
-|/api/v1/facilities/create                            |Create a facility                 |POST
-|                                                     |                                  |
-|/api/v1/provider//assign/facility/<'int:facility_id> |Assign provider a facility        |POST
+|Endpoint                                             | Functionality                       |HTTP method 
+|-----------------------------------------------------|-------------------------------------|-------------
+|/api/v1/user/signup                                  |Signup account                       |POST 
+|                                                     |                                     |
+|/api/v1/user/auth/signin                             |Signin in user                       |POST
+|                                                     |                                     |
+|/api/v1/user/auth/signout                            |Signin out user                      |POST
+|                                                     |                                     |
+|/api/v1/facilities                                   | Fetch all facilities                |GET
+|                                                     |                                     |
+|/api/v1/facilities/<'int:facility_id'>               |Fetch one facility                   |GET
+|                                                     |                                     |
+|/api/v1/facilities/create                            |Create a facility                    |POST
+|                                                     |                                     |
+|/api/v1/provider//assign/facility/<'int:facility_id> |Assign provider a facility           |POST
+|                                                     |                                     |
+|/api/v1/provider/<'int:facility_id>                  |Fetch all providers from a facility  |GET
 
 
 
