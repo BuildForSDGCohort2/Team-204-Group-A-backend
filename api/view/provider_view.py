@@ -1,10 +1,11 @@
 from flask import request, json, Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..model.facility import FacilityModel
-from ..model.user import UserModel
+from ..model.user import UserModel, UserSchema
 from ..view.user import custom_response, check_provider
 from .. import db
 
+user_schema = UserSchema()
 provider_api = Blueprint('provider', __name__)
 
 @provider_api.route('/assign/facility/<int:facility_id>', methods=['GET', 'POST'])
@@ -20,4 +21,16 @@ def assign_facility(facility_id):
     db.session.add(user)
     db.session.commit()
 
-    return custom_response({'message':'You have assigned to a {},{}facility.'.format(user, facility)},201)
+    return custom_response({'message':'You are assigned to {}.'.format(facility.facilityname)},201)
+
+@provider_api.route('/<int:facility_id>', methods=['GET'])
+@jwt_required
+def get_providers_list(facility_id):
+
+    provider = UserModel.get_providers(facility_id)
+
+    if not provider:
+        return custom_response({'error': 'Facility lists is empty'}, 404)
+
+    ser_provider = user_schema.dump(provider, many=True).data
+    return custom_response(ser_provider, 200)

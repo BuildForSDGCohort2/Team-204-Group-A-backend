@@ -47,6 +47,12 @@ class FacilityModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def update(self, data):
+        for key, item in data.items():
+            setattr(self, key, item)
+        self.modified_at = datetime.datetime.utcnow()
+        db.session.commit()
+
     @staticmethod
     def get_all_facilities():
         return FacilityModel.query.all()
@@ -60,7 +66,7 @@ class FacilityModel(db.Model):
         return FacilityModel.query.filter_by(facilityname=value).first()
 
     def __repr__(self):
-        return '<Facility: {}>'.format(self.id)
+        return '<Facility: {}>'.format(self.name)
 
 class FacilitySchema(Schema):
 

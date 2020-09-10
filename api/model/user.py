@@ -6,6 +6,7 @@ from marshmallow import fields, Schema
 from flask_jwt_extended import get_jwt_identity
 import datetime
 from . import db, bcrypt
+from api.model.facility import FacilityModel
 
 class UserModel(db.Model):
 
@@ -75,8 +76,12 @@ class UserModel(db.Model):
     def get_user_by_username(value):
         return UserModel.query.filter_by(username=value).first()
 
+    @staticmethod
+    def get_providers(value):
+        return UserModel.query.join(UserModel.facility).filter(FacilityModel.id == value).all()
+
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<id {}>'.format(self.username)
 
 class UserSchema(Schema):
 
@@ -88,4 +93,5 @@ class UserSchema(Schema):
     is_provider = fields.Bool(required=False)
     password = fields.Str(required=True, load_only=True)
     created_at = fields.DateTime(dump_only=True)
-    modified_at = fields.DateTime(dump_only=True)    
+    modified_at = fields.DateTime(dump_only=True)
+    facility_id = fields.Int()    
