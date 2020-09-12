@@ -3,6 +3,8 @@
 """
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
+from wtforms.validators import DataRequired
 
 
 # local import
@@ -52,7 +54,7 @@ def create_api(config_name):
         admin_user = UserModel(data)
         
         # admin = UserModel(data)
-        admin_user.save()
+        admin_user.save()        
 
     # temporary route
     @api.route('/')
@@ -60,4 +62,21 @@ def create_api(config_name):
         return 'Hello, World!'
 
     return api
+
+
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    password = PasswordField('New Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password')
+    accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+
+
+class PasswordForm(Form):
+    password = PasswordField('Password', validators=[DataRequired()])
+
+
     

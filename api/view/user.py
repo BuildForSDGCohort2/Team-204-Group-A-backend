@@ -2,6 +2,7 @@ from flask import request, json, Response, Blueprint, abort
 from flask_jwt_extended import (create_access_token, jwt_required, get_raw_jwt, get_jwt_identity)
 from ..model.user import UserModel, UserSchema
 from ..model.blacklist_token import BlacklistToken
+from flask_login import login_required
 
 user_api = Blueprint('users', __name__)
 user_schema = UserSchema()
@@ -13,6 +14,14 @@ def check_admin():
 
 @user_api.route('/signup', methods=['POST'])
 def create_user():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        user = User(form.username.data, form.email.data,
+                    form.password.data)
+        db_session.add(user)
+        flash('Thanks for registering')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
     """Creates user."""
     req_data = request.get_json(force=True)
     data, error = user_schema.load(req_data)
@@ -114,3 +123,19 @@ def check_provider():
     provider = get_provider()
     if not provider:
         abort(403)
+
+@user_api.route('/password_change', methods=["GET", "POST"])
+@login_required
+def user_password_change():
+    form = PasswordForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = current_user
+            user.password = form.password.data
+            db.session.add(user)
+            db.session.commit()
+            flash('Password has been updated!', 'success')
+            return redirect(url_for('users.user_profile'))
+ 
+    return render_template('password_change.html', form=form)
+
