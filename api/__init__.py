@@ -38,21 +38,21 @@ def create_api(config_name):
     api.register_blueprint(facility_blue_print, url_prefix='/api/v1/facilities')
     api.register_blueprint(provider_blue_print, url_prefix='/api/v1/provider')
     
-    @api.before_first_request
-    def create_admin_user():
-        db.drop_all()
-        db.create_all()
-        # save admin
-        data = {'firstname' : "User",
-                'lastname' : "Admin",
-                'username' : "admin",
-                'email' : "admin@admin.com",
-                'password' : "Admin123",
-                'is_admin' : True}
-        admin_user = UserModel(data)
+    # @api.before_first_request
+    # def create_admin_user():
+    #     db.drop_all()
+    #     db.create_all()
+    #     # save admin
+    #     data = {'firstname' : "User",
+    #             'lastname' : "Admin",
+    #             'username' : "admin",
+    #             'email' : "admin@admin.com",
+    #             'password' : "Admin123",
+    #             'is_admin' : True}
+    #     admin_user = UserModel(data)
         
-        # admin = UserModel(data)
-        admin_user.save()
+    #     # admin = UserModel(data)
+    #     admin_user.save()
 
     # temporary route
     @api.route('/')
