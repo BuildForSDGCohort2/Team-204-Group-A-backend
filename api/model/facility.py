@@ -21,6 +21,7 @@ class FacilityModel(db.Model):
     town = db.Column(db.String(128), nullable=True)
     landmark = db.Column(db.String(128), nullable=True)
     description = db.Column(db.String(128), nullable=True)
+    facility_appointed = db.relationship('AppointmentModel', backref='facility',lazy='dynamic')
     created_at = db.Column(db.DateTime)
     modified_at = db.Column(db.DateTime)
     users = db.relationship('UserModel', backref='facility', lazy='dynamic')

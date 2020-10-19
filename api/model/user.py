@@ -7,6 +7,8 @@ from flask_jwt_extended import get_jwt_identity
 import datetime
 from . import db, bcrypt
 from api.model.facility import FacilityModel
+from api.model.message import MessageModel
+from api.model.notification import NotificationModel
 
 class UserModel(db.Model):
 
@@ -24,6 +26,21 @@ class UserModel(db.Model):
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_provider = db.Column(db.Boolean, nullable=False, default=False)
     facility_id = db.Column(db.Integer, db.ForeignKey('facility.id'))
+    message_sent = db.relationship('MessageModel', foreign_keys='MessageModel.sender_id',backref='author',
+                                     lazy='dynamic')
+    messages_received = db.relationship('MessageModel', 
+                                        foreign_keys='MessageModel.recipient_id',backref='recipient',
+                                         lazy='dynamic')
+
+    appointed_provider = db.relationship('AppointmentModel', foreign_keys='Appointment.provider_id',backref='provider',
+                                     lazy='dynamic')
+    appointed_patient = db.relationship('AppointmentModel', 
+                                        foreign_keys='Appointment.patient_id',backref='patient',
+                                         lazy='dynamic')
+                                         
+    last_message_read_time = db.Column(db.DateTime)
+    notifications = db.relationship('NotificationModel', backref='users',
+                                    lazy=True)
 
     def __init__(self, data):
         """Constructor."""
@@ -36,6 +53,7 @@ class UserModel(db.Model):
         self.password = self.__generate_hash(data.get('password'))
         self.created_at = datetime.datetime.utcnow()
         self.modified_at = datetime.datetime.utcnow()
+        self.last_message_read_time = datetime.datetime.utcnow()
 
 
     def save(self):
@@ -80,6 +98,13 @@ class UserModel(db.Model):
     def get_providers(value):
         return UserModel.query.join(UserModel.facility).filter(FacilityModel.id == value).all()
 
+
+    def add_notification(self, name, data):
+        self.notifications.filter_by(name=name).delete()
+        notification = NotificationModel(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(notification)
+        return notification
+
     def __repr__(self):
         return '<id {}>'.format(self.username)
 
@@ -94,4 +119,5 @@ class UserSchema(Schema):
     password = fields.Str(required=True, load_only=True)
     created_at = fields.DateTime(dump_only=True)
     modified_at = fields.DateTime(dump_only=True)
-    facility_id = fields.Int()    
+    facility_id = fields.Int()   
+    message = fields.Nested(MessageModel, many=True) 
