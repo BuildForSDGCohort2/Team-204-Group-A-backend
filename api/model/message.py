@@ -39,10 +39,6 @@ class MessageModel(db.Model):
     def get_one_message(id):
         return MessageModel.query.get(id)
 
-    @staticmethod
-    def get_all_messages():
-        return MessageModel.query.all()
-
     def new_messages(self):
         last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
         return MessageModel.query.filter_by(messages_received=self).filter(

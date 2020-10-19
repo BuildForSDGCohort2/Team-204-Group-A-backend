@@ -14,6 +14,7 @@ from api.view.user import user_api as user_blue_print
 from api.view.facility_view import facility_api as facility_blue_print
 from api.view.provider_view import provider_api as provider_blue_print
 from api.view.message_view import message_api as message_blue_print
+from api.view.apointment_view import appointment_api as appointment_blue_print
 
 
 def create_api(config_name):
@@ -24,9 +25,10 @@ def create_api(config_name):
     bcrypt.init_app(api)
     db.init_app(api)
     from .model.blacklist_token import BlacklistToken
-    from .model.user import UserModel, UserSchema
+    from .model.user import UserModel
     from .model.facility import FacilityModel
     from .model.message import MessageModel
+    from .model.appointment import AppointmentModel
     from .model.notification import NotificationModel
     
     jwt = JWTManager(api)
@@ -41,6 +43,7 @@ def create_api(config_name):
     api.register_blueprint(facility_blue_print, url_prefix='/api/v1/facilities')
     api.register_blueprint(provider_blue_print, url_prefix='/api/v1/provider')
     api.register_blueprint(message_blue_print, url_prefix='/api/v1/messages')
+    api.register_blueprint(appointment_blue_print, url_prefix='/api/v1/appointments')
 
     # temporary route
     @api.route('/')

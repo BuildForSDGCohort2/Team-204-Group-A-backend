@@ -31,6 +31,13 @@ class UserModel(db.Model):
     messages_received = db.relationship('MessageModel', 
                                         foreign_keys='MessageModel.recipient_id',backref='recipient',
                                          lazy='dynamic')
+
+    appointed_provider = db.relationship('AppointmentModel', foreign_keys='Appointment.provider_id',backref='provider',
+                                     lazy='dynamic')
+    appointed_patient = db.relationship('AppointmentModel', 
+                                        foreign_keys='Appointment.patient_id',backref='patient',
+                                         lazy='dynamic')
+                                         
     last_message_read_time = db.Column(db.DateTime)
     notifications = db.relationship('NotificationModel', backref='users',
                                     lazy=True)

@@ -48,5 +48,3 @@ def get_all_messages():
 
     ser_messages = message_schema.dump(messages, many=True).data
     return custom_response(ser_messages, 200)
-
-
